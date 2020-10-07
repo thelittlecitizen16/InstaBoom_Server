@@ -1,5 +1,5 @@
 import express = require('express');
-import { GetFullResponse } from './controllers/unionController'
+import { GetDateFromElastic } from './controllers/elasticConnector'
 
 var router = express.Router();
 
@@ -7,11 +7,15 @@ function CreateError(error : any)
 {
     return {"error": error}
 }
-
-router.post('/search',(req, res) => {
+router.post('/search',async(req, res) => {
     try {
-        //GetFullResponse();
+        GetDateFromElastic(req.body)
+        .then((response)=>{
+            res.json(response);
+        });
     } catch (error) {
         res.status(500).json(CreateError(error));
     }
 });
+
+module.exports = router;
