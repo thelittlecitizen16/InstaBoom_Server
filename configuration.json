@@ -1,0 +1,6 @@
+{
+    "server": {
+        "port": 9000
+    },
+    "corsAllowed": ["http://localhost:3000"]
+}
