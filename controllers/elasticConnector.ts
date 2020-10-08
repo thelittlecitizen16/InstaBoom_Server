@@ -2,12 +2,11 @@ import axios, { AxiosError } from 'axios';
 import { GetAllPicturesOfEntities } from './s3Connector'
 
 async function GetDateFromElastic(reqBody: any) {
-     return await axios.post('http://localhost:8081/search', reqBody)
+    return await axios.post('http://localhost:8081/search', reqBody)
         .then(async (res) => {
             let entities: string[] = new Array<string>();
-            entities = res.data.map((d: { _source: { entityId: any; }; }) => d._source.entityId);
-            
-            return GetAllPicturesOfEntities(entities,res.data);
+            entities = res.data.hits.map((d: { _source: { entityId: any; }; }) => d._source.entityId);
+            return GetAllPicturesOfEntities(entities, res.data);
         }).catch((error: AxiosError<Error>) => {
             return error;
         });

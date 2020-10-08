@@ -4,12 +4,11 @@ async function GetAllPicturesOfEntities(entities: string[], resData: any): Promi
     return await axios.post('http://localhost:8082/getphotos', { "entities": entities })
         .then(response => {
             let result = resData;
-
-            result.forEach((element: { _source: { [x: string]: string; }; }) => {
+            result.hits.forEach((element: { _source: { [x: string]: string; }; }) => {
                 let entityId = element._source.entityId;
                 element._source["picture"] = response.data[entityId]
             });
-            
+
             return result;
         }).catch((error: AxiosError<Error>) => {
         });
