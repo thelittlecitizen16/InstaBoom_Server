@@ -13,7 +13,7 @@ async function GetDateFromElastic(reqBody: any) {
 }
 
 async function AddEntityToArchive(entityId: string): Promise<any> {
-    axios.get(`http://localhost:8081/archive/d/${entityId}`)
+    return axios.post(`http://localhost:8081/archive/${entityId}`)
         .then(res => {
             return res.data;
         }).catch((error: AxiosError<Error>) => {
