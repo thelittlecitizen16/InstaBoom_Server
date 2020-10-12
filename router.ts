@@ -11,7 +11,10 @@ router.post('/search',async(req, res) => {
     try {
         GetDateFromElastic(req.body)
         .then((response)=>{
-            res.json(response);
+            if(response?.name === "Error"){
+                res.status(404).json(response);
+            }else{
+            res.json(response);}
         });
     } catch (error) {
         res.status(500).json(CreateError(error));

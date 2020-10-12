@@ -5,7 +5,7 @@ async function GetDateFromElastic(reqBody: any) {
     return await axios.post('http://localhost:8081/search', reqBody)
         .then(async (res) => {
             let entities: string[] = new Array<string>();
-            if (res.data.total?.value === 0) {
+            if (res.data.hits?.length === 0) {
                 return res.data;
             }
             entities = res.data.hits.map((d: { _source: { entityId: any; }; }) => d._source.entityId);
