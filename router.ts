@@ -22,7 +22,10 @@ router.post(`/archive/:id`,async(req, res) => {
     try {
         AddEntityToArchive(req.params.id)
         .then((response)=>{
-            res.json(response);
+            if(response.name === "Error"){
+                res.status(404).json(response);
+            }else{
+            res.json(response);}
         });
     } catch (error) {
         res.status(500).json(CreateError(error));
